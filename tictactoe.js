@@ -3,35 +3,38 @@
 // We'll be modifying our base logic in the 
 // next steps as per requirements     
 var turn = 1; 
-  
+var players = ["First Player", "Second Player"]
+var signs = ["fa-check", "fa-times"]
 $("button").click(function() { 
-    if(turn == 1) { 
-        $("#screen").text("PLAYER 2 TURN FOLLOWS"); 
-   
-        // Check sign font from font-awesome 
-        $(this).addClass("fa fa-2x fa-check");
-            turn = 2;             
-    } 
-    else {     
-        $("#screen").text("PLAYER 1 TURN FOLLOWS"); 
-       
-        // Cross sign font from font-awesome 
-        $(this).addClass("fa fa-2x fa-times");  
-        turn = 1; 
-    } 
+    if(!isInvalid($(this))){
+        $(this).addClass("fa fa-2x " + signs[turn%2]);
+        // Check if this move won
+        if(check(signs[turn%2])){
+            console.log(players[turn%2] + " Won")
+            // GameOver disable all cells
+            $.each($("button"), function() {
+                $(this).prop("disabled",true);
+            });
+        }else {
+            // Turn to next player
+            $("#screen").text(players[turn%2] + " Turn"); 
+            turn += 1;
+        }
+    }
 }); 
 
 /* Script for checking any invalid moves */
-$("button").click(function() { 
-    if($(this).hasClass("fa fa-2x fa-times") || 
-            $(this).hasClass("fa fa-2x fa-check")) 
-    {        
-        $(this).css("background-color", "red"); 
+function isInvalid(cell) {
+    if(cell.hasClass("fa-times") || cell.hasClass("fa-check")){
+        cell.css("background-color", "red"); 
         setTimeout(() => { 
-            $(this).css("background-color", "white"); 
-        }, 800);         
-    } 
-});
+            cell.css("background-color", "white"); 
+        }, 800);
+        console.log("Invalid")
+        return true
+    }
+    console.log("Valid")
+}
 
 /* Function to check the winning move */
 function check(symbol) { 
@@ -105,23 +108,16 @@ function check(symbol) {
 }
 
 /* Resetting the game */
-function reset() 
-{ 
-   $("#screen").text("PLAYER 1 TURN FOLLOWS"); 
-   $("#screen").css("background-color", "transparent"); 
-   $(".r").removeClass("fa fa-2x fa-check"); 
-   $(".r").removeClass("fa fa-2x fa-times"); 
-   turn=1; 
-  
-   // Reset Colors 
-   $(".sq1").css("color", "black"); 
-   $(".sq2").css("color", "black"); 
-   $(".sq3").css("color", "black"); 
-   $(".sq4").css("color", "black"); 
-   $(".sq5").css("color", "black"); 
-   $(".sq6").css("color", "black"); 
-   $(".sq7").css("color", "black"); 
-   $(".sq8").css("color", "black"); 
-   $(".sq9").css("color", "black"); 
-  
+function reset(){ 
+    $("#screen").text("PLAYER 1 TURN FOLLOWS")
+        .css("background-color", "transparent"); 
+    $(".r").removeClass("fa fa-2x fa-check")
+        .removeClass("fa fa-2x fa-times"); 
+    turn=1; 
+
+    // Enable all buttons
+    $.each($("button"), function() {
+        $(this).prop("disabled",false)
+            .removeAttr('style');
+    });
 } 

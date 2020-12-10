@@ -20,10 +20,9 @@ $(document).ready(function(){
                         $(this).prop("disabled",true);
                     }
                 });
-            }else {
-                // Turn to next player
-                $("#screen").text(players[turn%2] + " Turn"); 
+            }else {// Turn to next player
                 turn += 1;
+                $("#screen").text(players[turn%2] + " Turn");
             }
         }
     });
@@ -114,12 +113,10 @@ function check(symbol) {
 
 /* Resetting the game */
 function reset(){
-    turn=0; 
-    $("#screen").text(players[turn%2] + " Turn")
-        .css("background-color", "transparent"); 
+    turn=0;
+    $("#screen").text(players[turn%2] + " Turn");
     $(".r").removeClass("fa fa-2x fa-check")
         .removeClass("fa fa-2x fa-times"); 
-    
 
     // Enable all buttons
     $.each($("button"), function() {

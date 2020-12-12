@@ -16,8 +16,8 @@
 <body class="bg-dark"> 
 	<div class="container-fluid">
 		<div class="text-white text-center col-12">
-			<h2>TIC TAC TOE</h2>
-			<h4 id="screen" class="p-3"></h4>
+			<h3>TIC TAC TOE</h3>
+			<h5 id="screen" class="p-3"></h5>
 		</div>
 		<div class="row justify-content-center">
 			<table> 
@@ -69,17 +69,39 @@
 						<option>expert</option-->
 					</select>
 				</div>
-				<!--span>Score: </span><br>
-				<span class="player1">Human <span class="bg-secondary btn-sm text-white 1-score">0</span></span>
-				<span class="player2">Computer <span class="bg-secondary btn-sm text-white 2-score">0</span></span-->
+				<span class="text-white">Score: </span><br>
+				<span class="player1 text-white">Human </span><span class="bg-secondary btn-sm text-white score1">0</span></span>
+				<span class="player2 text-white">Computer </span><span class="bg-secondary btn-sm text-white score2">0</span></span>
 				<!-- Reset button for Game -->
 			<hr><span class="btn btn-danger col-12" onClick="reset()">Reset</span>
 			</div>
 		</div>
-		
 	</div>
+	
+	<!-- Modal -->
+	<div class="modal fade" id="scoreModal" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+			<div class="modal-content">
+				<div class="modal-header border-bottom-0 bg-light">
+					<h5 class="modal-title"></h5>
+					<button type="button" class="close text-danger" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body text-center border-2">
+					<h5 class="result_cap"></h5>
+					<span class="player1">Human </span><span class="bg-secondary btn-sm text-white score1">0</span>
+					<span class="player2">Computer </span><span class="bg-secondary btn-sm text-white score2">0</span>
+				</div>
+				<div class="modal-footer d-flex justify-content-center">
+					<a class="text-center text-muted delimiter" href="https://games.mathsend.com/tic-tac-toe/">games.mathsend.com/tic-tac-toe</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<style>
-		button { 
+		.box { 
 			height: 60px; 
 			width: 60px;
 		}

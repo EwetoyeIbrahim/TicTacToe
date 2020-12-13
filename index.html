@@ -70,10 +70,10 @@
 					</select>
 				</div>
 				<span class="text-white">Score: </span><br>
-				<span class="player1 text-white">Human </span><span class="bg-secondary btn-sm text-white score1">0</span></span>
-				<span class="player2 text-white">Computer </span><span class="bg-secondary btn-sm text-white score2">0</span></span>
+				<span class="player1 text-white">Human <kbd class="score1">0</kbd></span>
+				<span class="player2 text-white">Computer <kbd class="score2">0</kbd></span>
 				<!-- Reset button for Game -->
-			<hr><span class="btn btn-danger col-12" onClick="reset()">Reset</span>
+				<hr><span class="btn btn-danger col-12" onClick="reset()">Reset</span>
 			</div>
 		</div>
 	</div>
@@ -84,14 +84,15 @@
 			<div class="modal-content">
 				<div class="modal-header border-bottom-0 bg-light">
 					<h5 class="modal-title"></h5>
-					<button type="button" class="close text-danger" data-dismiss="modal" aria-label="Close">
+					<!--button type="button" class="close text-danger" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
-					</button>
+					</button-->
 				</div>
 				<div class="modal-body text-center border-2">
 					<h5 class="result_cap"></h5>
-					<span class="player1">Human </span><span class="bg-secondary btn-sm text-white score1">0</span>
-					<span class="player2">Computer </span><span class="bg-secondary btn-sm text-white score2">0</span>
+					<span class="player1">Human <kbd class="score1">0</kbd></span>
+					<span class="player2">Computer <kbd class="score2">0</kbd></span>
+					<p class="mt-3 text-muted">Click anywhere outside this box to continue</p>
 				</div>
 				<div class="modal-footer d-flex justify-content-center">
 					<a class="text-center text-muted delimiter" href="https://games.mathsend.com/tic-tac-toe/">games.mathsend.com/tic-tac-toe</a>

@@ -12,27 +12,6 @@ const win_set =  [[1,2,3],[1,4,7],
 // default first player announcement
 $("#screen").text(players[turn%2] + " play first");
 
-/* Play your selected button:
-    1. the button must have not been played
-    2. the referee decides if the move wins, drwas or game-on
-    3. depending on the mode/level the next player is called to play */
-$(".box").click(function() { 
-    if(!isInvalid($(this))){
-        $(this).addClass("fa fa-2x " + signs[turn%2]);
-        referee();
-        shouldComputerPlay();
-        
-    }
-});
-
-function shouldComputerPlay() {
-    if (level==levels[0]) return true;
-    if(turn%2== 1){
-        computerPlayer(level);
-        referee();
-    }
-}
-
 /* Selection of level/mode:
     Upon selection, game resets; level is set; and players are renamed */
 $("select").change(function(){
@@ -47,6 +26,28 @@ $("select").change(function(){
     $(".player1").text(players[0]);
     $(".player2").text(players[1]);
 });
+
+/* Play your selected button:
+    1. the button must have not been played
+    2. the referee decides after a box has been played.
+    3. let computer play its turn, if required*/
+$(".box").click(function() { 
+    if(!isInvalid($(this))){
+        $(this).addClass("fa fa-2x " + signs[turn%2]);
+        referee();
+        shouldComputerPlay();
+    }
+});
+
+/* Trigger computer when required to play
+    1. play when not in human mode or turn
+    2. inform the referee */
+function shouldComputerPlay() {
+    if (level !== levels[0] && turn%2== 1){
+        computerPlayer(level);
+        referee();
+    }
+}
 
 /* Script for checking any invalid moves:
     For a move to be valid, it must have not been previously occupied */
@@ -64,11 +65,20 @@ function isInvalid(cell) {
 /* Referee:
     Decides Win, Draw, Turn */
 function referee() {
+    var result_cap;
+    // Look for draw first
+    if ($("td").has("button.fa").length > 8) {
+        result_cap = "Draw";
+    }
     // Check if the last move won
     if(checkWin(signs[turn%2])){
-        $(".result_cap").text(players[turn%2] + " won this set");
-        $(".modal-title").text(level+" mode");
+        result_cap = players[turn%2] + " won this set";
         score();
+    }
+    // Announce result or game-on
+    if (typeof result_cap !== 'undefined') {
+        $(".result_cap").text(result_cap);
+        $(".modal-title").text(level+" mode");
         // GameOver disable all cells
         $.each($("button"), function() {
             if(!$(this).hasClass("text-success")){
@@ -76,10 +86,11 @@ function referee() {
             }
         });
         $('#scoreModal').modal('show');
-    }else {// Turn to next player
+    } else {
+        // No win or draw, game on!!!
         turn += 1;
         $("#screen").text(players[turn%2] + " playing...");
-    }
+    }    
 }
 
 /* Check if the game has been won:
@@ -131,6 +142,12 @@ function continue_play() {
     
 }
 
+/* After the score card has been hidden, let the player choose to continue playing */
+$("#scoreModal").on("hidden.bs.modal", function() {
+    $("#screen").html(
+        "<button class='btn btn-md btn-primary' onclick='continue_play()'>continue</button>");
+})
+
 /* Reset, this should be equivalent to refreshing the browser:
     1. Turn and score are refreshed
     2. All continue_play() are efected */
@@ -142,6 +159,4 @@ function reset(){
     continue_play();
 }
 
-$("#scoreModal").on("hidden.bs.modal", function() {
-    $("#screen").html("<button class='btn btn-md btn-primary' onclick='continue_play()'>continue</button>");
-})
+

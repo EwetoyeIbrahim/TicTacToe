@@ -44,9 +44,11 @@ $(".box").click(function() {
     2. inform the referee */
 function shouldComputerPlay() {
     if (level !== levels[0] && turn%2== 1){
-        computerPlayer(level);
-        referee();
-    }
+        $("#screen").text(players[turn%2] + " playing...");
+        $.when( computerPlayer(level) ).done(function() {
+            referee();;
+        });
+    };
 }
 
 /* Script for checking any invalid moves:
@@ -78,7 +80,7 @@ function referee() {
     // Announce result or game-on
     if (typeof result_cap !== 'undefined') {
         $(".result_cap").text(result_cap);
-        $(".modal-title").text(level+" mode");
+        $(".modal-title").text(level[0].toUpperCase() + level.slice(1) + " Mode");
         // GameOver disable all cells
         $.each($("button"), function() {
             if(!$(this).hasClass("text-success")){

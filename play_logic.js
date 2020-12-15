@@ -1,17 +1,17 @@
 /* Computer Playing Logic */
 function computerPlayer(level){
-    if (level=="zombie"){
-        zombie();
+    if (level=="sergeant"){
+        sergeant();
     }
-    if (level=="learner"){
-        learner();
+    if (level=="captain"){
+        captain();
     }
 }
 
-/* Zombie play:
+/* Sergeant play:
     1. stops or wins when two consecutive cells are played in the winning set
     2. plays a random cell, in the absence of 1. */
-function zombie() {
+function sergeant() {
     for (let i = 0; i < win_set.length; i++) {
         if(($('.'+win_set[i][0]).hasClass(signs[0]) && $('.'+win_set[i][1]).hasClass(signs[0]) || 
             $('.'+win_set[i][0]).hasClass(signs[1]) && $('.'+win_set[i][1]).hasClass(signs[1])) &&
@@ -24,17 +24,17 @@ function zombie() {
 }
 
 // --------- Work in Progress ---------------------------
-/* Learner play:
+/* Captain play:
     1. stops win when two consecutive cells are played in the winning set
     2. plays a random cell, in the absence of 1. */
-function learner() {
+function captain() {
     // See if the computer has a winning move at stake
     if (checks(signs[1])) return;
     // try blocking the player from winning
     if (checks(signs[0])) return;
     // try fixing into one of the corners
-    if ($(".box:not(.fa,.2,.4,.5,.6,.8)").length > 0) {
-        var corners = $(".box:not(.2,.4,.5,.6,.8)");
+    if ($(".box:not(.fa,.2,.4,.6,.8)").length > 0) {
+        var corners = $(".box:not(.fa,.2,.4,.6,.8)");
         rand_corner = corners[Math.floor(Math.random() * corners.length)];
         $(rand_corner).addClass("fa fa-2x " + signs[1]);
         return;

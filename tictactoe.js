@@ -1,8 +1,7 @@
 // Global declarations   
 var turn = 0; // playing turn
 var score_set =[0, 0];
-const signs = ["fa-check", "fa-times"];
-const levels = ["human vs human", "zombie", "expert"];
+const signs = ["fa-circle", "fa-times"];
 var level = $("select").val();; // default level/mode of place
 var players = ["You", "Computer"]; // default player names
 const win_set =  [[1,2,3],[1,4,7],
@@ -17,7 +16,7 @@ $("#screen").text(players[turn%2] + " play first");
 $("select").change(function(){
     reset();
     level = $("select").val();
-    if (level==levels[0]) {
+    if (level=="Human") {
         players = ["Player 1", "Player 2"];
     } else {
         players = ["You", "Computer"];
@@ -43,7 +42,7 @@ $(".box").click(function() {
     1. play when not in human mode or turn
     2. inform the referee */
 function shouldComputerPlay() {
-    if (level !== levels[0] && turn%2== 1){
+    if (level !== "Human" && turn%2== 1){
         $("#screen").text(players[turn%2] + " playing...");
         $.when( computerPlayer(level) ).done(function() {
             referee();;
@@ -80,7 +79,7 @@ function referee() {
     // Announce result or game-on
     if (typeof result_cap !== 'undefined') {
         $(".result_cap").text(result_cap);
-        $(".modal-title").text(level[0].toUpperCase() + level.slice(1) + " Mode");
+        $(".modal-title").text(level + " Mode");
         // GameOver disable all cells
         $.each($("button"), function() {
             if(!$(this).hasClass("text-success")){

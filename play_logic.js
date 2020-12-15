@@ -1,9 +1,9 @@
 /* Computer Playing Logic */
 function computerPlayer(level){
-    if (level=="sergeant"){
+    if (level=="Sergeant"){
         sergeant();
     }
-    if (level=="captain"){
+    if (level=="Captain"){
         captain();
     }
 }
@@ -23,7 +23,6 @@ function sergeant() {
     random_play();
 }
 
-// --------- Work in Progress ---------------------------
 /* Captain play:
     1. stops win when two consecutive cells are played in the winning set
     2. plays a random cell, in the absence of 1. */
@@ -50,8 +49,8 @@ let random_play = () => {
     $(rand_choice).addClass("fa fa-2x " + signs[1]);
 };
 
-// searching tactics
-var check_seq = [[1,2],[0,2],[0,1]];
+// check if the ginven mark is going to win on next play
+var check_seq = [[1,2],[0,2],[0,1]]; // search sequence
 function checks(mark) {
     for (let i = 0; i < win_set.length; i++) {
         for (let j = 0; j < check_seq.length; j++) {

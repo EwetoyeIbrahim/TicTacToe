@@ -21,7 +21,7 @@ $("select").change(function(){
     } else {
         players = ["You", "Computer"];
     }
-    $("#screen").text(players[turn%2] + " playing..."); // default first player announcement
+    $("#screen").text(players[turn%2] + " playing..."); // default first player
     $(".player1").text(players[0]);
     $(".player2").text(players[1]);
 });
@@ -30,22 +30,29 @@ $("select").change(function(){
     1. the button must have not been played
     2. the referee decides after a box has been played.
     3. let computer play its turn, if required*/
-$(".box").click(function() { 
+function humanPlay() {
     if(!isInvalid($(this))){
         $(this).addClass("fa fa-2x " + signs[turn%2]);
         referee();
         shouldComputerPlay();
     }
-});
+}
+
+// binding the function for human interaction
+$(function() {
+    $('body').on("click", ".box", humanPlay)
+})
 
 /* Trigger computer when required to play
     1. play when not in human mode or turn
     2. inform the referee */
 function shouldComputerPlay() {
     if (level !== "Human" && turn%2== 1){
+        $('body').off("click", ".box", humanPlay); // pause human interaction
         $("#screen").text(players[turn%2] + " playing...");
         $.when( computerPlayer(level) ).done(function() {
-            referee();;
+            $('body').on("click", ".box", humanPlay);
+            referee();
         });
     };
 }

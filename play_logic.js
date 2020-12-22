@@ -1,11 +1,7 @@
 /* Computer Playing Logic */
 function computerPlayer(level){
-    if (level=="Sergeant"){
-        sergeant();
-    }
-    if (level=="Captain"){
-        captain();
-    }
+    if (level=="Sergeant") sergeant();
+    if (level=="Captain") captain();
 }
 
 /* Sergeant play:
